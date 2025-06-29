@@ -29,6 +29,7 @@ const AuthPage = () => {
         const route = isLogin ? "/user/login" : "/user/register";
         try {
             const res = await axios.post(`${apiUrl}${route}`, formData);
+            console.log(res,"dfdffdfd")
             alert(res.data.message);
             navigate("/")
         } catch (err) {
