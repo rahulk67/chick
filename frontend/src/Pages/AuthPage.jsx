@@ -15,7 +15,7 @@ const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(false);
     const [formData, setFormData] = useState({ phone: "", password: "" });
     // const apiUrl = "http://localhost:8000";
-    const apiUrl = "https://chicken-api-zeta.vercel.app/";
+    const apiUrl = "https://chicken-api-zeta.vercel.app";
 
 
 
