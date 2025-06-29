@@ -111,8 +111,12 @@ import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
 const multipliers = [
-  1.2, 1.5, 2.0, 2.5, 3.0, 3.6, 4.5, 5.2, 6.3, 7.1,
-  8.0, 9.2, 10.3, 12.0, 13.2, 15.4, 16.3, 17.2, 18.5, 19.4, 20.6, 22.1, 23.3, 24.9, 26.0, 27.5
+  1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0,
+  5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
+  10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0,
+  13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5,
+  17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0,
+  20.5, 21.0, 21.5, 22.0,
 ];
 
 // History of recent games
@@ -211,6 +215,8 @@ function Home() {
     }, 300);
 
     const randomCrash = Math.floor(Math.random() * (multipliers.length - 1));
+    // const randomCrash = Math.floor(Math.random() * 12) + 1;
+
     setCrashIndex(randomCrash);
     setCurrentStep(0);
     setIsRunning(true);
@@ -236,8 +242,9 @@ function Home() {
       cashOut();
       return;
     }
-
+    console.log(nextStep,crashIndex,"next","crsdh")
     if (nextStep === crashIndex) {
+   
       setMessage('💥 Crashed! You lost your bet.');
       setIsRunning(false);
       setStarted(false);
@@ -384,9 +391,12 @@ function Home() {
           //   display: 'flex'
           // }}
         >
-          {multipliers.map((game, idx) => (
+          {multipliers.slice(1).map((game, idx) => (
+            
             <div key={idx} className="history-wrapper">
-              <div className={`history-item ${game}`} >
+              <div className={`history-item ${game} ${
+        message && idx === currentStep-1 ? "bg-danger" : "bg-success"
+      }`} >
                 {game.toFixed(1)}x
               </div>
               <div className="dashed-line" />
@@ -423,13 +433,28 @@ function Home() {
           <div className={`chicken-container ${jumpClass}`}>
             <div className="chicken-character">
               <div className="chicken">
-                <img src="/images/chiken.png" className="chicken-img flip-horizontal" style={{
+               { message ?  <img src={"/images/fried.png"} className="chicken-img flip-horizontal" style={{
+                  // left: firstJump ? '70px' : '0px',
+                  transform: `scaleX(-1) translateX(-${currentStep * 83}px) translateY(13px)`,
+                  // transform: scaleX(0),
+                  transition: 'transform 0.5s ease',
+                   width: "100px",
+                  height:"100px"
+                }}
+               
+                /> 
+:
+
+<img src={`/images/chiken.png`} className="chicken-img flip-horizontal" style={{
                   // left: firstJump ? '70px' : '0px',
                   transform: `scaleX(-1) translateX(-${currentStep * 85}px)`,
                   // transform: scaleX(0),
                   transition: 'transform 0.5s ease',
+                 
+              
                 }}
-                />
+               
+                /> }
               </div>
             </div>
           </div>

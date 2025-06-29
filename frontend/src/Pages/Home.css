@@ -204,7 +204,7 @@ body, html {
     /* background: rgba(0, 0, 0, 0.7); */
     background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
 
-    border-radius: 20px;
+    /* border-radius: 20px; */
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
@@ -300,7 +300,7 @@ body, html {
     display: flex;
     position: relative;
     flex-direction: row;
-    background-image: url("/images/jali.jpeg");
+    background-image: url("/images/jali.png");
     background-size: 80px auto;
     background-repeat: no-repeat;
     background-position: bottom center;
@@ -417,6 +417,7 @@ body, html {
     /* bottom: 20; */
     margin-top: 61%;
     color: #fff;
+    /* background: limegreen */
   }
   
   .dashed-line {
