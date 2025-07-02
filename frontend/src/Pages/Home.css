@@ -236,15 +236,35 @@ body, html {
   
   .stats-container {
     display: flex;
-    gap: 15px;
+
+    gap: 12px;
+    justify-content: flex-end;
+   
+    padding: 10px;
+  }
+  
+  .login-btn {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .login-btn:hover {
+    background-color: #1565c0;
   }
   
   .stat-box {
-    background: rgba(40, 40, 40, 0.8);
-    padding: 8px 15px;
-    border-radius: 10px;
+    background: rgba(40, 40, 40, 0.85);
+    padding: 10px 16px;
+    border-radius: 12px;
     text-align: center;
-    min-width: 100px;
+    min-width: 90px;
+    flex: 1 1 auto;
   }
   
   .stat-label {
@@ -255,9 +275,28 @@ body, html {
   .stat-value {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 3px;
+    margin-top: 4px;
     color: white;
   }
+  
+  /* Mobile-first responsive tweaks */
+  @media (max-width: 600px) {
+    .stats-container {
+      justify-content: center;
+      gap: 10px;
+    }
+  
+    .stat-box {
+      min-width: 100px;
+      flex: 1 1 40%;
+    }
+  
+    .login-btn {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+  }
+  
   
   .online {
     color: #4CAF50;
@@ -301,10 +340,11 @@ body, html {
     position: relative;
     flex-direction: row;
     background-image: url("/images/jali.png");
-    background-size: 80px auto;
+    background-size: 60px auto;
     background-repeat: no-repeat;
     background-position: bottom center;
     z-index: 0;
+   
   }
   
   .dash {
@@ -402,6 +442,7 @@ body, html {
     /* overflow-x: auto; */
     width: 100%;
     z-index: 0;
+   
     
   }
   
@@ -415,16 +456,37 @@ body, html {
     font-size: 20px;
     font-weight: bold;
     /* bottom: 20; */
-    margin-top: 61%;
     color: #fff;
+    margin-top: 39%;
+    color: #fff;
+    margin-inline-start: 23px;
     /* background: limegreen */
   }
   
+
+  .history-item22 {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    /* bottom: 20; */
+    color: #fff;
+    margin-top: 52%;
+    color: #fff;
+    margin-inline-start: 22px;
+    /* background: limegreen */
+  }
+
   .dashed-line {
     width: 5px;
     height: 219px;
     border-left: 6px dashed #999;
-    margin-left: 10px;
+    margin-left: 22px;
+
   }
   
   .history-item.win {

@@ -115,8 +115,7 @@ const multipliers = [
   5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
   10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0,
   13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5,
-  17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0,
-  20.5, 21.0, 21.5, 22.0,
+  17.0, 17.5, 18.0, 18.5, 19.0, 19.5,
 ];
 
 // History of recent games
@@ -214,8 +213,10 @@ function Home() {
       setJumpClass(''); // remove to allow retriggering
     }, 300);
 
-    const randomCrash = Math.floor(Math.random() * (multipliers.length - 1));
-    // const randomCrash = Math.floor(Math.random() * 12) + 1;
+    // const randomCrash = Math.floor(Math.random() * (multipliers.length - 1)); // as of moultiplie length
+    const randomCrash = Math.floor(Math.random() * 8) + 1; // for mobile
+    // const randomCrash = Math.floor(Math.random() * 30) + 1; // for desktop
+
 
     setCrashIndex(randomCrash);
     setCurrentStep(0);
@@ -309,6 +310,53 @@ function Home() {
 
 
   const navigate = useNavigate();
+
+  const stepMap = {
+    1: 110,
+    2: 230,
+    3: 350,
+    4: 470,
+    5: 590,
+    6: 710,
+    7: 830,
+    8: 955,
+    9: 1076,
+    10: 1200,
+    11: 1314,
+    12: 1440,
+    13: 1560,
+    14: 1680,
+    15: 1804,
+    16: 1920,
+    17: 2042,
+    18: 2160,
+    19: 2285,
+    20: 2405,
+    21: 2525,
+    22: 2645,
+    23: 2765,
+    24: 2890,
+    25: 3014,
+    26: 3125,
+    27: 3245,
+    28: 3365,
+    29: 3485,
+    30: 3605,
+    31: 3725,
+    32: 3845,
+    33: 3965,
+    34: 4085,
+    35: 4205,
+    36: 4325,
+    37: 4445,
+    38: 4565,
+    39: 4685,
+    40: 4805
+  };
+  
+  
+  const translateX = stepMap[currentStep] || 0;
+
   return (
     <div className="app-container">
       <div className="top-bar">
@@ -318,7 +366,7 @@ function Home() {
         </div>
 
         <div className="stats-container">
-            <button onClick={() => navigate("/auth")}>Login</button>
+            <button className="login-btn" onClick={() => navigate("/auth")}>Login</button>
 
             
           <div className="stat-box">
@@ -340,7 +388,7 @@ function Home() {
         className="game-area"
         style={{
           transform: `translateX(-${currentStep * 85}px)`,
-          transition: 'transform 0.5s ease',
+          transition: 'transform 0.5s ease'
           // display: 'flex'
         }}
       >
@@ -394,11 +442,15 @@ function Home() {
           {multipliers.slice(1).map((game, idx) => (
             
             <div key={idx} className="history-wrapper">
-              <div className={`history-item ${game} ${
-        message && idx === currentStep-1 ? "bg-danger" : "bg-success"
-      }`} >
-                {game.toFixed(1)}x
+              { idx < currentStep -1  ? <div className={``} >
+                <img className='history-item22' src='/images/coin.png' />
               </div>
+:
+               <div className={`history-item ${game} ${
+       idx === currentStep - 1  ? "bg-success" : "bg-secondary"
+      }`} >
+                {game.toFixed(1)}
+              </div>}
               <div className="dashed-line" />
             </div>
           ))}
@@ -435,11 +487,12 @@ function Home() {
               <div className="chicken">
                { message ?  <img src={"/images/fried.png"} className="chicken-img flip-horizontal" style={{
                   // left: firstJump ? '70px' : '0px',
-                  transform: `scaleX(-1) translateX(-${currentStep * 83}px) translateY(13px)`,
+                  transform: `scaleX(-1) translateX(-${translateX}px) translateY(13px)`,
                   // transform: scaleX(0),
                   transition: 'transform 0.5s ease',
                    width: "100px",
-                  height:"100px"
+                  height:"100px",
+                  left: "-17px"
                 }}
                
                 /> 
@@ -447,7 +500,8 @@ function Home() {
 
 <img src={`/images/chiken.png`} className="chicken-img flip-horizontal" style={{
                   // left: firstJump ? '70px' : '0px',
-                  transform: `scaleX(-1) translateX(-${currentStep * 85}px)`,
+                  
+                  transform: `scaleX(-1) translateX(-${translateX}px)`,
                   // transform: scaleX(0),
                   transition: 'transform 0.5s ease',
                  
