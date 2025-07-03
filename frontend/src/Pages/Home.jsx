@@ -111,7 +111,7 @@ import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
 const multipliers = [
-  1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0,
+  0.0,1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0,
   5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
   10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0,
   13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5,
@@ -206,7 +206,9 @@ function Home() {
 
 
   const startGame = () => {
+    console.log(isRunning,balance,betAmount)
     if (isRunning || balance < betAmount) return;
+
 
     setJumpClass('chicken-jump');
     setTimeout(() => {
@@ -359,29 +361,67 @@ function Home() {
 
   return (
     <div className="app-container">
-      <div className="top-bar">
-        <div className="game-title">
-          <div className="chicken-icon">🐔</div>
-          CHICKEN ROAD
+
+<div className="container-fluid top-bar py-2 shadow-sm">
+  <div className="row align-items-center">
+    {/* Main Header Section (Logo, Login, and 10000 div) */}
+    <div className="col-12 d-flex justify-content-between align-items-center gap-1">
+      
+      {/* Game Title Section with Logo */}
+      <div className="d-flex align-items-center">
+        <img 
+          src="https://chicken-road.inout.games/static/svg/logo_mobile.57d4dc22.svg" 
+          className="me-2 fs-3" 
+          alt="Game Logo" 
+          style={{ maxHeight: '30px' }} // Optional: Limit the logo size
+        />
+      </div>
+      
+      {/* Login Button */}
+      <button 
+        className="btn btn-sm text-light bg-success btn-sm px-2 py-1" 
+        onClick={() => navigate("/auth")}
+      >
+        Login
+      </button>
+
+      <div className="d-flex gap-3 justify-content-center">
+        {/* ₹10000 Stat Box */}
+        <div 
+          className="d-flex justify-content-center align-items-center px-2 py-1 gap-2 rounded" 
+          style={{
+            minWidth: '100px',
+            // width: '180px',
+            height: '33px',
+            whiteSpace: 'nowrap',
+            background: 'rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          ₹10000
         </div>
 
-        <div className="stats-container">
-            <button className="login-btn" onClick={() => navigate("/auth")}>Login</button>
-
-            
-          <div className="stat-box">
-            <div className="stat-label">Online</div>
-            <div className="stat-value online">4,658</div>
-            {/* <div className="">4,658</div> */}
-
-          </div>
-
-          <div className="stat-box">
-            <div className="stat-label">Balance</div>
-            <div className="stat-value ">₹{balance.toFixed(2)}</div>
-          </div>
+        {/* Balance Stat Box */}
+        <div 
+          className="d-flex justify-content-center align-items-center px-2 py-1 gap-2 rounded" 
+          style={{
+            minWidth: '100px',
+            // width: '180px',
+            height: '33px',
+            whiteSpace: 'nowrap',
+            background: 'rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          ₹{balance.toFixed(2)}
         </div>
       </div>
+
+      
+    </div>
+  </div>
+</div>
+
+ 
+
 
       <div
         ref={gameAreaRef}
@@ -449,7 +489,7 @@ function Home() {
                <div className={`history-item ${game} ${
        idx === currentStep - 1  ? "bg-success" : "bg-secondary"
       }`} >
-                {game.toFixed(1)}
+                {game.toFixed(1)}x
               </div>}
               <div className="dashed-line" />
             </div>

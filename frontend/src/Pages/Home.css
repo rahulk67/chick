@@ -212,10 +212,11 @@ body, html {
   
   /* Top Bar Styles */
   .top-bar {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 15px 20px; */
+    color: white;
     background: rgba(0, 0, 0, 0.8);
     border-bottom: 2px solid #ffcc00;
   }
