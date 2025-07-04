@@ -482,7 +482,7 @@ function Home() {
           {multipliers.slice(1).map((game, idx) => (
             
             <div key={idx} className="history-wrapper">
-              { idx < currentStep -1  ? <div className={``} >
+              { idx < currentStep - 1  ? <div className={``} >
                 <img className='history-item22' src='/images/coin.png' />
               </div>
 :
@@ -525,7 +525,7 @@ function Home() {
           <div className={`chicken-container ${jumpClass}`}>
             <div className="chicken-character">
               <div className="chicken">
-               { message ?  <img src={"/images/fried.png"} className="chicken-img flip-horizontal" style={{
+               { message ?  <img   loading="lazy" src={"/images/fried.png"} className={`chicken-img flip-horizontal ${message ? "d-block" : "d-none"}`} style={{
                   // left: firstJump ? '70px' : '0px',
                   transform: `scaleX(-1) translateX(-${translateX}px) translateY(13px)`,
                   // transform: scaleX(0),
@@ -533,6 +533,7 @@ function Home() {
                    width: "100px",
                   height:"100px",
                   left: "-17px"
+                  
                 }}
                
                 /> 
