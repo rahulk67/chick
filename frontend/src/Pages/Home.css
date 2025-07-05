@@ -306,7 +306,7 @@ body, html {
   /* Game Area Styles */
   .game-area {
     position: relative;
-    height: 220px;
+    height: 400px;
     background: #0a1929;
     border-bottom: 2px solid #2a4a6a;
     /* overflow: scroll; */
@@ -340,8 +340,8 @@ body, html {
     display: flex;
     position: relative;
     flex-direction: row;
-    background-image: url("/images/jali.png");
-    background-size: 60px auto;
+    background-image: url("/images/backk.png");
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: bottom center;
     z-index: 0;
@@ -415,8 +415,8 @@ body, html {
   
   .chicken-img{
      bottom: -40px;
-      width: 70px;
-      height: 70px;
+      max-width: 90px;
+      height: auto;
       /* left:70px; */
       position: absolute;
   }
@@ -448,7 +448,7 @@ body, html {
   }
   
   .history-item {
-    width: 75px;
+    /* width: 75px;
     height: 75px;
     border-radius: 50%;
     display: flex;
@@ -457,12 +457,37 @@ body, html {
     font-size: 25px;
     font-weight: bold;
     /* bottom: 20; */
-    color: #fff;
-    margin-top: 30%;
-    color: #fff;
-    margin-inline-start: 23px;
+    /* color: #fff; */
+    /* margin-top: 30%; */
+    /* color: #fff; */
+    /* margin-inline-start: 23px; */
     /* background: limegreen */
+
+
+
+    position: relative;
+    top: 33%;
+    transform: none;
+    width: 113px;
+    height: 120px;
+    background-image: url("/images/blue-coin.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 20px;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: rgba(255, 255, 255, 0.8) 0px 0px 3px;
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
+
   
 
   .history-item22 {
