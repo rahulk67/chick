@@ -22,10 +22,10 @@ const AuthPage = () => {
 
 
   // const apiUrl = "http://localhost:8000";
-  const apiUrl = 'https://chicken-api-zeta.vercel.app';
+  // const apiUrl = 'https://chicken-api-zeta.vercel.app';
 
-  const apiUrl22 = import.meta.env.VITE_API_URL;
-  console.log(apiUrl22,"apii ulldklfdlkf")
+  const apiUrl = import.meta.env.VITE_API_URL;
+  console.log(apiUrl,"apii ulldklfdlkf")
 
 
   const navigate = useNavigate();
@@ -123,7 +123,7 @@ const AuthPage = () => {
             className="rounded-circle"
             style={{ width: "48px", height: "48px", objectFit: "cover" }}
           />
-          {apiUrl22}zxzxfv22
+          {apiUrl}zxzxfv22
         </div>
 
         {!isAuthenticated ? <div className="d-flex align-items-center gap-2 fw-bold small">
