@@ -28,7 +28,7 @@ const AdminLogin = () => {
     setSuccess('');
 
     try {
-      const res = await axios.post(`${apiUrl}/user/admin-login'`, formData);
+      const res = await axios.post(`${apiUrl}/user/admin-login`, formData);
       const { token } = res.data;
 
       localStorage.setItem('admin_token', token); // Store admin token
