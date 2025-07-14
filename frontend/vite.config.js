@@ -1,10 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-
-// https://vite.dev/config/
+// ✅ DO NOT include tailwindcss here (explained below)
 export default defineConfig({
-  plugins: [react(),    tailwindcss(),
-  ],
-})
+  base: '/', // ✅ tells Vite to use root path — required for Vercel!
+  plugins: [react()],
+});
