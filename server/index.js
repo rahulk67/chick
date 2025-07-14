@@ -11,7 +11,11 @@ const PORT = process.env.PORT || 8000;
 connection();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://chicken-road-omega.vercel.app', // ✅ your frontend URL
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
