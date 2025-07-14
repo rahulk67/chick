@@ -22,9 +22,9 @@ const AuthPage = () => {
 
 
   // const apiUrl = "http://localhost:8000";
-  // const apiUrl = 'https://chicken-api-zeta.vercel.app';
+  const apiUrl = 'https://chicken-api-zeta.vercel.app';
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
   console.log(apiUrl,"apii ulldklfdlkf")
 
 
