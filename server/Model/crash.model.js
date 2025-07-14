@@ -6,4 +6,5 @@ const crashSchema = new mongoose.Schema({
   x: { type: String, default:"" },
 });
 
-export default mongoose.model('Crash', crashSchema);
+const Crash = mongoose.model('Crash', crashSchema);
+export default Crash ;

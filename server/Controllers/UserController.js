@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import UserModel from "../Model/User.model.js";
 import jwt from 'jsonwebtoken';
 import crashModel from "../Model/crash.model.js";
-import adminModel from "../Model/admin.model.js";
+import adminModel from "../Model/admin.model.js"
 
 const PP = async (req, res) => {
   const multipliers = [
@@ -174,8 +174,8 @@ const AdminLogin = async (req, res) => {
     if (!email || !phone || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-    const ww = await adminModel.find()
-    console.log("All admins:", ww);
+    // const ww = await admin.find()
+    // console.log("All admins:", ww);
     const cleanEmail = email.trim();
     const admin = await adminModel.findOne({  email: new RegExp(`^${cleanEmail}$`, 'i')  });
     console.log("Admin found:", admin);
