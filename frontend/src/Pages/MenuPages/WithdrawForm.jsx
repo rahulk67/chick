@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../utils/axiosInstance";
 
 const WithdrawForm =({ show, onClose }) => {
+
+  const [userInfo, setUserInfo] = useState(); // ✅ state to store user data
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axiosInstance.get(`${apiUrl}/user/user-info`);
+        console.log(res,"ressss")
+        setUserInfo(res.data.data); // ✅ store user data in state
+        // setBalance(res?.data?.data?.wallet)
+      } catch (err) {
+        console.error('❌ Error fetching user info:', err);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
   return (
     <>
 
@@ -18,11 +38,14 @@ const WithdrawForm =({ show, onClose }) => {
           style={{ top: "1rem", right: "1rem" }}
         ></button>
 
-        <h2 className="fs-5 fw-bold text-center mt-5 mb-3">Withdrawal</h2>
+        <h2 className="fs-5 fw-bold text-center mt-5 mb-3">Withdraw</h2>
 
+
+        {userInfo?.nextDeposit ? 
         <form className="px-4 pb-4">
           <div className="mb-3">
-            <label className="form-label">Amount</label>
+            <label className="form-label">Amount
+</label>
             <input
               type="number"
               name="amount"
@@ -92,9 +115,27 @@ const WithdrawForm =({ show, onClose }) => {
           >
             Submit
           </button>
-        </form>
+        </form> : 
+        <div className="mb-3 mx-2">
+        
+            <input
+              type="number"
+              name="amount"
+              className="form-control bg-secondary text-white border-secondary"
+              placeholder="Complete KyC deposit of 1699rs to get Withdrawl"
+              disabled
+            />
+          </div>
+        
+        }
+
+
+
+
       </div>
     </div> }
+
+ 
     </>
   );
 };

@@ -20,6 +20,10 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ✅ Make uploads folder public
+app.use('/uploads', express.static('uploads'));
+
+
 // Routes
 app.get('/', (req, res) => {
   res.send('API is running 🚀');

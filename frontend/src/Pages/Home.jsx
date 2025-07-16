@@ -111,6 +111,7 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import UserMenu from "./UserMenu";
 import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 // History of recent games
 
@@ -151,6 +152,24 @@ function Home() {
   }, []);
 
 
+  const [userInfo, setUserInfo] = useState(""); // ✅ state to store user data
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axiosInstance.get(`${apiUrl}/user/user-info`);
+        console.log(res,"ressss")
+        setUserInfo(res.data.data); // ✅ store user data in state
+        setBalance(res?.data?.data?.wallet)
+      } catch (err) {
+        console.error('❌ Error fetching user info:', err);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+
 
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -162,7 +181,7 @@ function Home() {
 
   const [betAmount, setBetAmount] = useState(100);
   const [cashOutValue, setCashOutValue] = useState("0.00");
-  const [balance, setBalance] = useState(1000.0);
+  const [balance, setBalance] = useState(0);
   const [autoCashout, setAutoCashout] = useState(0);
   const [recentWins, setRecentWins] = useState([]);
   const intervalRef = useRef(null);
@@ -283,7 +302,7 @@ function Home() {
 
     fetchNumber(); // initial call immediately
 
-    const interval = setInterval(fetchNumber, 1000); // call every 1 second
+    const interval = setInterval(fetchNumber, 10000); // call every 1 second
 
     return () => clearInterval(interval); // cleanup on unmount
   }, []);

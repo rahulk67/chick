@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axiosInstance from '../utils/axiosInstance';
 
 const AdminSetting = () => {
 
@@ -29,13 +30,16 @@ const AdminSetting = () => {
     console.log('Submitting data:', formData);
 
     try {
-      const response = await fetch(`${apiUrl}/user/deposit-method`, {
-        method: 'POST',
-        body: data,
-      });
+      // const response = await fetch(`${apiUrl}/user/deposit-method`, {
+      //   method: 'POST',
+      //   body: data,
+      // });
 
-      const result = await response.json();
-      alert(result.message || 'Detail submitted successfully!');
+      // const result = await response.json();
+      // alert(result.message || 'Detail submitted successfully!');
+      const response = await axiosInstance.post(`${apiUrl}/user/deposit-method`, data);
+
+      alert(response.data.message || 'Detail submitted successfully!');
     } catch (error) {
       console.error('Error:', error);
       alert('Error submitting the form');

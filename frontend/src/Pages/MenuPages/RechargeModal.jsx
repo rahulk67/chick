@@ -1,23 +1,87 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import axiosInstance from "../../utils/axiosInstance";
 
 const RechargeModal = ({ show, onClose }) => {
-  const [amount, setAmount] = useState('');
-  const [utr, setUtr] = useState('');
+  const [amount, setAmount] = useState("");
+  const [utr, setUtr] = useState("");
 
   const handlePresetClick = (val) => setAmount(val.toString());
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle recharge logic here
-    console.log('Amount:', amount);
-    console.log('UTR:', utr);
+
+    try {
+      const response = await axiosInstance.post(`${apiUrl}/user/recharge-request`, {
+        amount,
+        utr,
+       // manually added
+      });
+  
+      console.log("✅ Recharge response:", response.data);
+      alert(response.data.message || 'Recharge submitted!');
+    } catch (error) {
+      console.error('❌ Recharge error:', error);
+      alert(error.response?.data?.message || 'Recharge failed');
+    }
+   
+    console.log("Amount:", amount);
+    console.log("UTR:", utr);
+  };
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const [payDetail, setPayDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPayDetail = async () => {
+      try {
+        const response = await axiosInstance.get(`${apiUrl}/user/get-pay-detail`); // Adjust base URL if needed
+
+        setPayDetail(response.data.data[0]); // Assuming { data: { ... } }
+      } catch (error) {
+        console.error("❌ Error fetching pay detail:", error);
+      } finally {
+        // setLoading(false);
+      }
+    
+    };
+
+    fetchPayDetail();
+  }, []);
+
+  console.log(payDetail);
+
+  const handleCopy = () => {
+    if (payDetail?.name) {
+      navigator.clipboard
+        .writeText(payDetail.name)
+        .then(() => {
+          alert("Copied to clipboard ✅");
+        })
+        .catch((err) => {
+          console.error("❌ Failed to copy:", err);
+        });
+    }
   };
 
   return (
-    <Modal show={show} onHide={onClose} centered backdrop="static" className="text-white">
+    <Modal
+      show={show}
+      onHide={onClose}
+      centered
+      backdrop="static"
+      className="text-white"
+    >
       <Modal.Body className="bg-dark rounded-4 p-4 text-white">
-        <Button variant="link" className="position-absolute top-0 end-0 text-white fs-4 p-2" onClick={onClose}>
+        <Button
+          variant="link"
+          className="position-absolute top-0 end-0 text-white fs-4 p-2"
+          onClick={onClose}
+        >
           &times;
         </Button>
 
@@ -25,16 +89,21 @@ const RechargeModal = ({ show, onClose }) => {
 
         <div className="text-center my-3">
           <img
-            src="https://root.chicken-road.zone/uploads/qrcodexs/1751430493.jpg"
+            src={`${apiUrl}/${payDetail?.file}`}
             alt="QR Code"
             className="img-fluid rounded-4 mb-2"
-            style={{ maxHeight: '200px' }}
+            style={{ maxHeight: "200px" }}
           />
           <div className="d-flex align-items-center justify-content-center gap-2 bg-secondary px-3 py-1 rounded-pill">
-            <small className="text-truncate" title="BHARATPE.8B0Z0I8Y9O34915@fbpe">
-              BHARATPE.8...
+            <small className="text-truncate" title={payDetail?.name}>
+              {payDetail?.name}
             </small>
-            <Button variant="link" className="text-white p-0" title="Copy to clipboard">
+            <Button
+              variant="link"
+              className="text-white p-0"
+              title="Copy to clipboard"
+              onClick={handleCopy}
+            >
               <i className="bi bi-clipboard"></i>
             </Button>
           </div>
@@ -44,7 +113,9 @@ const RechargeModal = ({ show, onClose }) => {
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label className="text-muted small">MINIMUM RECHARGE: <span className="text-white fw-bold">500</span></Form.Label>
+            <Form.Label className="text-muted small">
+              MINIMUM RECHARGE: <span className="text-white fw-bold">500</span>
+            </Form.Label>
             <Form.Label>Amount</Form.Label>
             <Form.Control
               type="text"

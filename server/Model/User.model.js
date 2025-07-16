@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
+  wallet:{
+    type:Number,
+    default:0,
+  },
+  firstDeposit: {
+    type: Boolean,
+    default: false,
+  },
+  nextDeposit: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true
 });

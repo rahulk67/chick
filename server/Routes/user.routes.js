@@ -16,7 +16,17 @@ router.post('/admin-login', User.AdminLogin);
 // router.post('/create', User.createAdmin); 
 
 
-router.post('/deposit-method', upload.single('file'), User.DepositMethod);
+router.post('/deposit-method', verifyToken , upload.single('file'), User.DepositMethod);
+router.get('/get-pay-detail',verifyToken , User.GetDepositDetail);
+
+router.post('/recharge-request',verifyToken , User.handleRechargeRequest);
+router.get('/all-recharge-request', verifyToken, User.getAllRechargeRequests); 
+router.post('/approve-recharge', verifyToken, User.approveRecharge); 
+router.get('/user-info', verifyToken, User.getUserInfo); 
+
+
+
+
 
 
 

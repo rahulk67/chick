@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 export const verifyToken = (req, res, next) => {
   // Get the token from Authorization header in the format "Bearer <token>"
   const token = req.headers['authorization']?.split(" ")[1];
+  // console.log(token,"sds")
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided.' });
