@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,36 +37,46 @@ const Admin = () => {
     }
   }, [navigate]);
 
-  return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
-  <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%', borderRadius: '12px' }}>
-    <h4 className="text-center fw-bold mb-3 text-primary">
-      Submit Crash Value
-    </h4>
-    <p className="text-center text-muted small mb-4">
-      Enter a number below to send it to the crash prediction API.
-    </p>
 
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="numInput" className="form-label fw-semibold">Crash Value</label>
-        <input
-          type="number"
-          id="numInput"
-          className="form-control"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          placeholder="Type a number (e.g. 5, 10.5)"
-          required
-        />
+
+  return (
+
+    <div className='bg-light'>
+    
+    
+    
+    <div className="container d-flex justify-content-center align-items-center min-vh-100 ">
+
+    
+      <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%', borderRadius: '12px' }}>
+        <h4 className="text-center fw-bold mb-3 text-primary">
+          Submit Crash Value
+        </h4>
+        <p className="text-center text-muted small mb-4">
+          Enter a number below to send it to the crash prediction API.
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="numInput" className="form-label fw-semibold">Crash Value</label>
+            <input
+              type="number"
+              id="numInput"
+              className="form-control"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+              placeholder="Type a number (e.g. 5, 10.5)"
+              required />
+          </div>
+
+          <button type="submit" className="btn btn-primary w-100 fw-bold">
+            <i className="bi bi-send-fill me-2"></i>Send to API
+          </button>
+        </form>
       </div>
 
-      <button type="submit" className="btn btn-primary w-100 fw-bold">
-        <i className="bi bi-send-fill me-2"></i>Send to API
-      </button>
-    </form>
-  </div>
-</div>
+
+    </div></div>
 
   );
 };

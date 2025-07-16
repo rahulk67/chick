@@ -2,6 +2,8 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Admin from "../admin/Admin";
 import AdminLogin from "../admin/AdminLogin";
+import AdminHeader from "../admin/AdminHeader";
+import AdminSetting from "../admin/AdminSetting";
 
 const AdminLayout = () => {
 
@@ -10,9 +12,12 @@ const AdminLayout = () => {
   return (
     <div className="">
       {/* You can add an AdminNavbar here */}
+      <AdminHeader />
       <Routes>
         <Route path="/login" element={<AdminLogin />} />
         <Route path="/" element={ <Admin /> } />
+        <Route path="/admin-setting" element={ <AdminSetting /> } />
+
 
 
         {/* <Route path="users" element={<AdminUsers />} /> */}

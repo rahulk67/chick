@@ -123,7 +123,7 @@ const AuthPage = () => {
             className="rounded-circle"
             style={{ width: "48px", height: "48px", objectFit: "cover" }}
           />
-          {apiUrl}zxzxfv22
+         
         </div>
 
         {!isAuthenticated ? <div className="d-flex align-items-center gap-2 fw-bold small">

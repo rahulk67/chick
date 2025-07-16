@@ -3,6 +3,7 @@ import UserModel from "../Model/User.model.js";
 import jwt from 'jsonwebtoken';
 import crashModel from "../Model/crash.model.js";
 import adminModel from "../Model/admin.model.js"
+import depositModel from "../Model/Deposit.model.js";
 
 const PP = async (req, res) => {
   const multipliers = [
@@ -230,4 +231,23 @@ const createAdmin = async (req, res) => {
   }
 };
 
-export default { PP, register,login, sendnum, getNum, AdminLogin , createAdmin };
+const DepositMethod = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const filePath = req.file?.path || '';
+  
+    const updated = await depositModel.findOneAndUpdate(
+      { name }, // Find by unique identifier (e.g., name)
+      { name, file: filePath }, // Update fields
+      { new: true, upsert: true } // Create if not found (first time), else update
+    );
+  
+    res.status(200).json({ message: 'Deposit Detail updated successfully.', data: updated });
+  } catch (error) {
+    console.error('❌ Error updating:', error);
+    res.status(500).json({ message: 'Internal Server Error', error });
+  }
+  
+};
+
+export default { PP, register,login, sendnum, getNum, AdminLogin , createAdmin ,DepositMethod };
