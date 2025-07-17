@@ -12,7 +12,7 @@ connection();
 
 // Middleware
 app.use(cors({
-  origin: 'https://chicken-road-omega.vercel.app', // ✅ your frontend URL
+  origin: "*", // ✅ your frontend URL
   // origin:"http://localhost:5173", // ✅ your frontend URL for local development
   credentials: true,
 }));
@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 app.use('/user', User);
 
 // Start server
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 export default app;
