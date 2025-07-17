@@ -12,8 +12,8 @@ connection();
 
 // Middleware
 app.use(cors({
-  // origin: 'https://chicken-road-omega.vercel.app', // ✅ your frontend URL
-  origin:"http://localhost:5173", // ✅ your frontend URL for local development
+  origin: 'https://chicken-road-omega.vercel.app', // ✅ your frontend URL
+  // origin:"http://localhost:5173", // ✅ your frontend URL for local development
   credentials: true,
 }));
 
