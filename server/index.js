@@ -10,12 +10,13 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 connection();
 
-// Middleware
+// // Middleware
 app.use(cors({
-  origin: "*", // ✅ your frontend URL
+  origin: "https://chicken.theeduca.com", // ✅ your frontend URL
   // origin:"http://localhost:5173", // ✅ your frontend URL for local development
   credentials: true,
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
