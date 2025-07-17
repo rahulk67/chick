@@ -7,14 +7,18 @@ import upload from "../Middleware/upload.js";
 const router = Router();
 
 
-router.get('/multiplier', verifyToken, User.PP);
+router.get('/multiplier',  User.PP);
 router.post('/register', User.register);
 router.post('/login', User.login); 
 router.post('/send-num', User.sendnum); 
+
+
+
 router.get('/get-num', User.getNum); 
 router.post('/admin-login', User.AdminLogin); 
 // router.post('/create', User.createAdmin); 
 
+router.post('/update-balance',verifyToken ,  User.updateBalance); 
 
 router.post('/deposit-method', verifyToken , upload.single('file'), User.DepositMethod);
 router.get('/get-pay-detail',verifyToken , User.GetDepositDetail);

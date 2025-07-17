@@ -116,13 +116,9 @@ import axiosInstance from "../utils/axiosInstance";
 // History of recent games
 
 function Home() {
-
-
-
   const [isAuthenticated, setIsAuthenticated] = useState(false); // null = unknown, true/false = known
   console.log(isAuthenticated, "is authenticated");
   const apiUrl = import.meta.env.VITE_API_URL;
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -151,26 +147,36 @@ function Home() {
       });
   }, []);
 
-
   const [userInfo, setUserInfo] = useState(""); // ✅ state to store user data
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const res = await axiosInstance.get(`${apiUrl}/user/user-info`);
-        console.log(res,"ressss")
+        console.log(res, "ressss");
         setUserInfo(res.data.data); // ✅ store user data in state
-        setBalance(res?.data?.data?.wallet)
+        setBalance(res?.data?.data?.wallet);
       } catch (err) {
-        console.error('❌ Error fetching user info:', err);
+        console.error("❌ Error fetching user info:", err);
       }
     };
 
     fetchUserInfo();
   }, []);
 
-
-
+  const updateUserWallet = async (amount) => {
+    try {
+      // or sessionStorage if you use that
+      const res = await axiosInstance.post(`${apiUrl}/user/update-balance`, {
+        amount,
+      });
+      console.log("✅ Balance updated:", res.data);
+      return res.data;
+    } catch (error) {
+      console.error("❌ Error updating balance:", error);
+      throw error;
+    }
+  };
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -323,11 +329,9 @@ function Home() {
       setCrashIndex(updatedCrash);
       crashWasRandomRef.current = false;
     }
-  
+
     prevNumberRef.current = number; // always update for next cycle
   }, [number]);
-  
-
 
   const startGame = () => {
     console.log(isRunning, balance, betAmount);
@@ -347,13 +351,8 @@ function Home() {
 
     const num = numMap[selected];
 
-
-  
-
     const prevNumber = prevNumberRef.current;
     let randomCrash;
-
-
 
     // const randomCrash = Math.floor(Math.random() * (multipliers.length - 1)); // as of moultiplie length
     // const randomCrash = Math.floor(Math.random() * num) + 1; // for mobile
@@ -362,7 +361,6 @@ function Home() {
     // if(number){
     //   const randomCrash = currentStep + 1;
     // }
-
 
     if (number === null) {
       randomCrash = Math.floor(Math.random() * num) + 1;
@@ -379,7 +377,6 @@ function Home() {
 
     console.log(randomCrash, "random crash");
 
-
     setCrashIndex(randomCrash);
     setCurrentStep(0);
     setIsRunning(true);
@@ -387,6 +384,7 @@ function Home() {
     setMessage("");
     setCashOutValue((betAmount * multipliers[0]).toFixed(2));
     setBalance((prev) => prev - betAmount);
+    // updateUserWallet( - betAmount)
   };
 
   const goStep = () => {
@@ -409,6 +407,7 @@ function Home() {
     if (nextStep === crashIndex) {
       setMessage("💥 Crashed! You lost your bet.");
       setPop(true);
+      updateUserWallet(-betAmount);
 
       setIsRunning(false);
       setStarted(false);
@@ -416,6 +415,7 @@ function Home() {
       const profit = (betAmount * multipliers[nextStep]).toFixed(2);
       setMessage(`🏁 Reached the end! Auto cash-out: +$${profit}`);
       setBalance((prev) => prev + parseFloat(profit));
+      // updateUserWallet(profit)
       setIsRunning(false);
       setStarted(false);
     }
@@ -433,7 +433,9 @@ function Home() {
       `✅ Cashed out at ${multipliers[currentStep].toFixed(2)}x: +₹ ${profit}`
     );
     setPop2(true);
-    setBalance((prev) => parseFloat((prev + parseFloat(profit)).toFixed(2)));
+
+    // setBalance((prev) => parseFloat((prev + parseFloat(profit)).toFixed(2)));
+    updateUserWallet(profit - betAmount);
 
     // Add to recent wins
     setRecentWins((prev) => [
@@ -534,11 +536,6 @@ function Home() {
       transition: "background-color 0.3s",
     };
   };
-
-
-
-
-  
 
   return (
     <div className="app-container">
@@ -957,9 +954,6 @@ function Home() {
           </div>
 
           {/* Mobile Button */}
-
-          
-          
         </div>
 
         {/* Auto Cashout */}

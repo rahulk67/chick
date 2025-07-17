@@ -164,6 +164,26 @@ const getNum = async (req, res) => {
 };
 
 
+
+const updateBalance = async (req, res) => {
+  try {
+
+  const userId = req.user.id;
+    const user = await UserModel.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const { amount } = req.body;
+    user.wallet += Number(amount);
+    await user.save();
+
+    res.status(200).json({ message: "Balance updated", balance: user.wallet });
+  } catch (error) {
+    console.error("❌ Balance update error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 const generateToken = (id) => {
   return jwt.sign({ id, role: 'admin' }, process.env.JWT_SECRET, {
     expiresIn: '7d',
@@ -297,15 +317,15 @@ const handleRechargeRequest = async (req, res) => {
     });
 
     
-    if(previousRecharge){
-      user.nextDeposit = true
-      user.firstDeposit = false
-    }else{
-      user.firstDeposit = true
-      user.nextDeposit = false
-    }
+    // if(previousRecharge){
+    //   user.nextDeposit = true
+    //   user.firstDeposit = false
+    // }else{
+    //   user.firstDeposit = true
+    //   user.nextDeposit = false
+    // }
    
-    await user.save();
+    // await user.save();
 
     await newRecharge.save();
 
@@ -365,6 +385,25 @@ const approveRecharge = async (req, res) => {
   rechargeRequest.status = 'Approved';
   await rechargeRequest.save();
 
+  // if(previousRecharge){
+  //   user.nextDeposit = true
+  //   user.firstDeposit = false
+  // }else{
+  //   user.firstDeposit = true
+  //   user.nextDeposit = false
+  // }
+
+  user.firstDeposit = true
+  if(user.firstDeposit){
+    user.nextDeposit = true
+ 
+  }
+
+if ( user.ekyc === "Processing"){
+  user.ekyc = "Done"
+}
+  await user.save();
+
 
 
     res.status(201).json({ message: 'Recharge request submitted successfully.' });
@@ -385,6 +424,7 @@ const approveWithdraw = async (req, res) => {
     // Update user.ekyc to 'Processing'
     user.ekyc = 'Processing';
     await user.save();
+
 
     // Find and update withdraw request status
     const withdrawRequest = await withdrawRequestModel.findById(id);
@@ -435,4 +475,4 @@ const getUserInfo = async (req, res) => {
 
 
 
-export default { PP, getUserInfo , register,login, sendnum, getNum, AdminLogin , createAdmin ,DepositMethod ,GetDepositDetail , handleRechargeRequest , approveWithdraw , handleWithdrawRequest , getAllRechargeRequests , getAllWithdrawRequests , approveRecharge };
+export default { PP, getUserInfo , register,login, sendnum, updateBalance , getNum, AdminLogin , createAdmin ,DepositMethod ,GetDepositDetail , handleRechargeRequest , approveWithdraw , handleWithdrawRequest , getAllRechargeRequests , getAllWithdrawRequests , approveRecharge };

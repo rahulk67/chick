@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 
-const WithdrawForm = ({ show, onClose , onDepositClick }) => {
+const WithdrawForm = ({ show, onClose, onDepositClick }) => {
   const [userInfo, setUserInfo] = useState(); // ✅ state to store user data
 
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -74,7 +74,9 @@ const WithdrawForm = ({ show, onClose , onDepositClick }) => {
 
             <h2 className="fs-5 fw-bold text-center mt-5 mb-3">Withdraw</h2>
 
-            {(userInfo?.nextDeposit  && userInfo?.ekyc === "Done") ? (
+            {userInfo?.nextDeposit &&
+            userInfo?.firstDeposit &&
+            (userInfo.ekyc === "Pending" || userInfo?.ekyc === "Done") ? (
               <form onSubmit={handleSubmit} className="px-4 pb-4">
                 <div className="mb-3">
                   <label className="form-label">Amount</label>
@@ -167,47 +169,65 @@ const WithdrawForm = ({ show, onClose , onDepositClick }) => {
               </form>
             ) : (
               <>
-              <div className="mb-3 mx-2">
-                <input
-                  type="number"
-                  name="amount"
-                  className="form-control bg-secondary text-white border-secondary"
-                   placeholder="Withdraw form is locked"
-                  disabled
-                />
-              </div>
+                <div className="mb-3 mx-2">
+                  <input
+                    type="number"
+                    name="amount"
+                    className="form-control bg-secondary text-white border-secondary"
+                    placeholder="Withdraw form is locked"
+                    disabled
+                  />
+                </div>
 
-              {!userInfo?.nextDeposit && (
-  <div className="alert alert-warning mx-3">
-    <strong>Note:</strong> For your first withdrawal, you have to deposit ₹1499 minimum amount.
-    {/* <button>Deposit(1499)</button> */}
-    <button
-      className="btn btn-sm btn-success mt-2"
-      onClick={() => {
-        onClose(); // Close this modal
-        onDepositClick("1499");
-      }}
-    >
-      Deposit ₹1499
-    </button>
-  </div>
+                {!userInfo?.nextDeposit && userInfo?.firstDeposit && (
+                  <div className="alert alert-warning mx-3">
+                    <strong>Note:</strong> For your first withdrawal, you have
+                    to deposit ₹1499 minimum amount.
+                    {/* <button>Deposit(1499)</button> */}
+                    <button
+                      className="btn btn-sm btn-success mt-2"
+                      onClick={() => {
+                        onClose(); // Close this modal
+                        onDepositClick("1499");
+                      }}
+                    >
+                      Deposit ₹1499
+                    </button>
+                  </div>
+                )}
 
-)}
+                {userInfo?.ekyc === "Processing" && (
+                  <div className="alert alert-info mx-3 mt-3">
+                    <strong>KYC Incomplete:</strong> You must complete your eKYC
+                    with a deposit of ₹699 to enable withdrawals.
+                    <button
+                      className="btn btn-sm btn-success mt-2"
+                      onClick={() => {
+                        onClose(); // Close this modal
+                        onDepositClick("699");
+                      }}
+                    >
+                      Deposit ₹699
+                    </button>
+                  </div>
+                )}
 
-{userInfo?.ekyc === "Processing" && (
-  <div className="alert alert-info mx-3 mt-3">
-    <strong>KYC Incomplete:</strong> You must complete your eKYC with a deposit of ₹699 to enable withdrawals.
-    <button
-      className="btn btn-sm btn-success mt-2"
-      onClick={() => {
-        onClose(); // Close this modal
-        onDepositClick("699");
-      }}
-    >
-      Deposit ₹699
-    </button>
-  </div>
-)}</>
+                {!userInfo?.firstDeposit && (
+                  <div className="alert alert-info mx-3 mt-3">
+                    <strong>Deposit Incomplete:</strong> You must complete your
+                    first deposit to enable withdrawals.
+                    <button
+                      className="btn btn-sm btn-success mt-2"
+                      onClick={() => {
+                        onClose(); // Close this modal
+                        onDepositClick("699");
+                      }}
+                    >
+                      {/* Deposit ₹699 */}
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
