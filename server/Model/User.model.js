@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  ekyc: {
+    type: String,
+    default: 'Pending',
+  },
 }, {
   timestamps: true
 });

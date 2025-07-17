@@ -20,8 +20,14 @@ router.post('/deposit-method', verifyToken , upload.single('file'), User.Deposit
 router.get('/get-pay-detail',verifyToken , User.GetDepositDetail);
 
 router.post('/recharge-request',verifyToken , User.handleRechargeRequest);
+
+router.post('/withdraw-request',verifyToken , User.handleWithdrawRequest);
+
 router.get('/all-recharge-request', verifyToken, User.getAllRechargeRequests); 
+router.get('/all-withdraw-request', verifyToken, User.getAllWithdrawRequests);
+
 router.post('/approve-recharge', verifyToken, User.approveRecharge); 
+router.post('/approve-withdraw', verifyToken, User.approveWithdraw);
 router.get('/user-info', verifyToken, User.getUserInfo); 
 
 

@@ -5,6 +5,7 @@ import crashModel from "../Model/crash.model.js";
 import adminModel from "../Model/admin.model.js"
 import depositModel from "../Model/Deposit.model.js";
 import rechargeRequestModel from "../Model/recharge.model.js";
+import withdrawRequestModel from "../Model/withdrawRequestModel.js";
 
 const PP = async (req, res) => {
   const multipliers = [
@@ -316,6 +317,31 @@ const handleRechargeRequest = async (req, res) => {
 };
 
 
+
+const handleWithdrawRequest = async (req, res) => {
+  try {
+    const newRequest = withdrawRequestModel(req.body);
+    await newRequest.save();
+    res.status(201).json({ message: 'Withdraw request submitted successfully.' });
+  } catch (error) {
+    console.error('❌ Withdraw Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+const getAllWithdrawRequests = async (req, res) => {
+  try {
+    const requests = await withdrawRequestModel.find().sort({ createdAt: -1 }); // newest first
+    res.status(200).json(requests);
+  } catch (error) {
+    console.error('❌ Get Withdraw Requests Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
 const approveRecharge = async (req, res) => {
   try {
     const { userId , amount , id  } = req.body;
@@ -344,6 +370,34 @@ const approveRecharge = async (req, res) => {
     res.status(201).json({ message: 'Recharge request submitted successfully.' });
   } catch (error) {
     console.error('❌ Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const approveWithdraw = async (req, res) => {
+  try {
+    const { mobile_number, id } = req.body;
+
+    // Find user
+    const user = await UserModel.findOne({phone : mobile_number});
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Update user.ekyc to 'Processing'
+    user.ekyc = 'Processing';
+    await user.save();
+
+    // Find and update withdraw request status
+    const withdrawRequest = await withdrawRequestModel.findById(id);
+    if (!withdrawRequest) {
+      return res.status(404).json({ message: 'Withdraw request not found' });
+    }
+
+    withdrawRequest.status = 'Approved';
+    await withdrawRequest.save();
+
+    res.status(200).json({ message: 'Withdraw request approved successfully.' });
+  } catch (error) {
+    console.error('❌ Error in approveWithdraw:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -381,4 +435,4 @@ const getUserInfo = async (req, res) => {
 
 
 
-export default { PP, getUserInfo , register,login, sendnum, getNum, AdminLogin , createAdmin ,DepositMethod ,GetDepositDetail , handleRechargeRequest , getAllRechargeRequests , approveRecharge };
+export default { PP, getUserInfo , register,login, sendnum, getNum, AdminLogin , createAdmin ,DepositMethod ,GetDepositDetail , handleRechargeRequest , approveWithdraw , handleWithdrawRequest , getAllRechargeRequests , getAllWithdrawRequests , approveRecharge };

@@ -3,9 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axiosInstance from "../../utils/axiosInstance";
 
-const RechargeModal = ({ show, onClose }) => {
-  const [amount, setAmount] = useState("");
+const RechargeModal = ({ show, onClose , initialAmount = "" }) => {
+  const [amount, setAmount] = useState(initialAmount);
   const [utr, setUtr] = useState("");
+
+  useEffect(() => {
+    setAmount(initialAmount); // update when prop changes
+  }, [initialAmount]);
 
   const handlePresetClick = (val) => setAmount(val.toString());
 
@@ -113,10 +117,10 @@ const RechargeModal = ({ show, onClose }) => {
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label className="text-muted small">
+            <Form.Label className="text-light small">
               MINIMUM RECHARGE: <span className="text-white fw-bold">500</span>
             </Form.Label>
-            <Form.Label>Amount</Form.Label>
+            <Form.Label></Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter amount"

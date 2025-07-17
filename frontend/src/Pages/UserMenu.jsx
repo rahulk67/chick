@@ -8,11 +8,19 @@ const UserMenu = ({ menu, onClose2 }) => {
   const [showRules, setShowRules] = useState(false);
 
   const [showRecharge, setShowRecharge] = useState(false);
+
+  const [initialRechargeAmount, setInitialRechargeAmount] = useState("");
   const [amhistory, setAmhistory] = useState(false);
   const [historyType, setHistoryType] = useState("");
   const [withdraw, setWithdraw] = useState(false);
 
   const [bethistory, setBethitory] = useState(false);
+
+  const handleDepositFromWithdraw = (amount) => {
+    setWithdraw(false);               // Close Withdraw Modal
+    setInitialRechargeAmount(amount); // Set amount to auto-fill
+    setShowRecharge(true);           // Open Recharge Modal
+  };
 
   return (
     <>
@@ -198,8 +206,9 @@ const UserMenu = ({ menu, onClose2 }) => {
           <RechargeModal
             show={showRecharge}
             onClose={() => setShowRecharge(false)}
+            initialAmount={initialRechargeAmount}
           />
-          <WithdrawForm show={withdraw} onClose={() => setWithdraw(false)} />
+          <WithdrawForm show={withdraw} onClose={() => setWithdraw(false)}  onDepositClick={handleDepositFromWithdraw} />
           <AmtHistory
             show={amhistory}
             onClose={() => setAmhistory(false)}

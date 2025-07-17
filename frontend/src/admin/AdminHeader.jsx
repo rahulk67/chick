@@ -149,6 +149,10 @@ const AdminHeader = () => {
             <li className="nav-item">
               <Link className="nav-link text-warning fw-medium" to="recharge-request">RechargeRequest</Link>
             </li>
+
+            <li className="nav-item">
+              <Link className="nav-link text-warning fw-medium" to="withdraw-request">WithdrawRequest</Link>
+            </li>
             <li className="nav-item">
               <Link className="nav-link text-warning fw-medium" to="#">About Us</Link>
             </li>
