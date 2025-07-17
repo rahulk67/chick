@@ -684,7 +684,7 @@ function Home() {
 
       <div
         ref={gameAreaRef}
-        className="game-area d-none"
+        className="game-area "
         style={
           {
             // transform: `translateX(-${currentStep * 85}px)`,
