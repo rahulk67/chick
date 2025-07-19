@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   },
   firstDeposit: {
     type: Boolean,
-    default: false,
+    default: null,
   },
   nextDeposit: {
     type: Boolean,
@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
   ekyc: {
     type: String,
     default: 'Pending',
+  },
+  stage: {
+    type: String,
+    default: 'Beginner',
   },
 }, {
   timestamps: true

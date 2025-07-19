@@ -12,7 +12,7 @@ connection();
 
 // // Middleware
 app.use(cors({
-  origin: "https://chicken.theeduca.com", // ✅ your frontend URL
+  origin: ["https://chicken.theeduca.com", "http://localhost:5173"], // ✅ your frontend URL
   // origin:"http://localhost:5173", // ✅ your frontend URL for local development
   credentials: true,
 }));

@@ -385,6 +385,19 @@ const approveRecharge = async (req, res) => {
   rechargeRequest.status = 'Approved';
   await rechargeRequest.save();
 
+
+  const userstage = user.stage;
+  if(userstage === "Beginner"){
+    user.stage = "fr"
+  }else if(userstage === "fr" && amount == 1499){
+    user.stage = "sr"
+  }else if(userstage === "ekyc" && amount == 699){
+    user.stage ="etrue"
+  }
+
+  // await user.save();
+
+
   // if(previousRecharge){
   //   user.nextDeposit = true
   //   user.firstDeposit = false
@@ -393,15 +406,16 @@ const approveRecharge = async (req, res) => {
   //   user.nextDeposit = false
   // }
 
-  user.firstDeposit = true
-  if(user.firstDeposit){
-    user.nextDeposit = true
- 
-  }
+  // user.firstDeposit = false
+  // if(! user.firstDeposit && amount == 1499){
+  //   user.nextDeposit = true
+  //   user.firstDeposit = true
+  // }
 
-if ( user.ekyc === "Processing"){
-  user.ekyc = "Done"
-}
+
+// if ( user.ekyc === "Processing" ){
+//   user.ekyc = "Done"
+// }
   await user.save();
 
 
@@ -422,9 +436,15 @@ const approveWithdraw = async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     // Update user.ekyc to 'Processing'
-    user.ekyc = 'Processing';
-    await user.save();
+    // user.ekyc = 'Processing';
+    // await user.save();
 
+const userstage = user.stage;
+if(userstage == "sr"){
+  user.stage = "ekyc"
+}
+
+await user.save();
 
     // Find and update withdraw request status
     const withdrawRequest = await withdrawRequestModel.findById(id);

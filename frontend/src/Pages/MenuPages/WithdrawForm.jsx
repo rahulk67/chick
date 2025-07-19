@@ -74,9 +74,8 @@ const WithdrawForm = ({ show, onClose, onDepositClick }) => {
 
             <h2 className="fs-5 fw-bold text-center mt-5 mb-3">Withdraw</h2>
 
-            {userInfo?.nextDeposit &&
-            userInfo?.firstDeposit &&
-            (userInfo.ekyc === "Pending" || userInfo?.ekyc === "Done") ? (
+            {userInfo?.stage == "Beginner" || userInfo?.stage == "sr" || userInfo?.stage == "etrue" 
+             ? (
               <form onSubmit={handleSubmit} className="px-4 pb-4">
                 <div className="mb-3">
                   <label className="form-label">Amount</label>
@@ -179,7 +178,7 @@ const WithdrawForm = ({ show, onClose, onDepositClick }) => {
                   />
                 </div>
 
-                {!userInfo?.nextDeposit && userInfo?.firstDeposit && (
+                {userInfo?.stage == "fr" && (
                   <div className="alert alert-warning mx-3">
                     <strong>Note:</strong> For your first withdrawal, you have
                     to deposit ₹1499 minimum amount.
@@ -196,7 +195,7 @@ const WithdrawForm = ({ show, onClose, onDepositClick }) => {
                   </div>
                 )}
 
-                {userInfo?.ekyc === "Processing" && (
+                {userInfo?.stage == "ekyc" && (
                   <div className="alert alert-info mx-3 mt-3">
                     <strong>KYC Incomplete:</strong> You must complete your eKYC
                     with a deposit of ₹699 to enable withdrawals.
@@ -212,7 +211,7 @@ const WithdrawForm = ({ show, onClose, onDepositClick }) => {
                   </div>
                 )}
 
-                {!userInfo?.firstDeposit && (
+                {/* {!userInfo?.firstDeposit && (
                   <div className="alert alert-info mx-3 mt-3">
                     <strong>Deposit Incomplete:</strong> You must complete your
                     first deposit to enable withdrawals.
@@ -223,10 +222,10 @@ const WithdrawForm = ({ show, onClose, onDepositClick }) => {
                         onDepositClick("699");
                       }}
                     >
-                      {/* Deposit ₹699 */}
+                     
                     </button>
                   </div>
-                )}
+                )} */}
               </>
             )}
           </div>
